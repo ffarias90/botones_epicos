@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The great button game</title>
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/toastr.min.css">
+
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    <script src="/static/js/toastr.min.js"></script>
+    <script src="/static/js/bootbox.min.js"></script>
+    <script src="/static/js/moment-with-locales.min.js"></script>
+    <style>
+        body {
+            font-family: poppins;
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.125rem;
+            line-height: 1.5;
+            transition: all 725ms ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: bolder;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: tomato;
+        }
+        
+        button {
+            cursor: pointer;
+            appearance: none;
+            border-radius: 4px;
+            font-size: 1.25rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid navy;
+            background-color: dodgerblue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>The button has been pushed <span id="numero">0</span> time(s)</h1>
+        <h5>Push the button to update the count!</h5>
+        <button id="btn-contador">Push the epic button</button>
+
+        <div id="botones">
+            <button id="reset" class="red">Reset count</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!--libreria socket-->
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script>
+        let contador = 0;
+
+        const socket = io('http://localhost:8000');
+
+        //sumar numero de pulsaciones del boton
+        $('#btn-contador').on('click', function() {
+            //contador = contador + 1;
+            //console.log(contador);
+            //$('#numero').html(contador);
+            //enviar info del html al servidor
+            socket.emit('boton_contador', {
+                saludo: 'hola',
+                contador
+            });
+        });
+
+        //resetear contador
+        /*$('#reset').on('click', function() {
+            contador = 0;
+            console.log(contador);
+            $('#numero').html(contador);
+            //enviar info del html al servidor
+            socket.emit('boton_contador', {
+                contador
+            });
+        });*/
+
+        //mensaje devuelto desde el servidor hacia la vista
+        socket.on('numero', function(data) {
+            console.log(data);
+            $('#numero').html(data.numero);
+        });
+    </script>
+</body>
+
+</html>
