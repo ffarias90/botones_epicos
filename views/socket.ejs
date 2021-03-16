@@ -52,7 +52,8 @@
 <body>
     <div class="container">
 
-        <h1>The button has been pushed <span id="numero">0</span> time(s)</h1>
+        <h1>The button has been pushed <span id="numero2">0</span> time(s)</h1>
+
         <h5>Push the button to update the count!</h5>
         <button id="btn-contador">Push the epic button</button>
 
@@ -78,37 +79,23 @@
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
     <script>
-        let contador = 0;
-
         const socket = io('http://localhost:8000');
 
         //sumar numero de pulsaciones del boton
         $('#btn-contador').on('click', function() {
-            //contador = contador + 1;
-            //console.log(contador);
-            //$('#numero').html(contador);
-            //enviar info del html al servidor
-            socket.emit('boton_contador', {
-                saludo: 'hola',
-                contador
-            });
+            socket.emit('boton_contador');
         });
 
+
         //resetear contador
-        /*$('#reset').on('click', function() {
-            contador = 0;
-            console.log(contador);
-            $('#numero').html(contador);
+        $('#reset').on('click', function() {
             //enviar info del html al servidor
-            socket.emit('boton_contador', {
-                contador
-            });
-        });*/
+            socket.emit('boton_reset');
+        });
 
         //mensaje devuelto desde el servidor hacia la vista
         socket.on('numero', function(data) {
-            console.log(data);
-            $('#numero').html(data.numero);
+            $('#numero2').html(data.count);
         });
     </script>
 </body>

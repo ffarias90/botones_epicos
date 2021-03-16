@@ -36,6 +36,8 @@ const server = app.listen(port, function() {
 // Ahora creamos nuestras funciones de Sockets
 const io = require('socket.io')(server);
 
+let contadorBtn = 0;
+
 
 // cuando me conecte con algún cliente
 io.on('connection', function(socket) {
@@ -64,11 +66,16 @@ io.on('connection', function(socket) {
 
     //escuchar mensaje desde la vista al servidor
     socket.on('boton_contador', function(data) {
-        //generar numero al azar
-        const numeroAzar = Math.floor(Math.random() * 1000)
-            //enviar desde el servidor a la vista a TODOS
-        io.emit('numero', { numero: numeroAzar });
-        console.log(data);
+        contadorBtn++;
+        //enviar desde el servidor a la vista a TODOS
+        io.emit('numero', { count: contadorBtn });
+
+    });
+
+    socket.on('boton_reset', function(data) {
+        contadorBtn = 0;
+        //enviar desde el servidor a la vista a TODOS
+        io.emit('numero', { count: contadorBtn });
     });
 
 });

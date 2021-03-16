@@ -29,16 +29,20 @@ function checkAdmin(req, res, next) {
 
 }
 
+//let contadorBtn = 0;
+
 //página de usuario
 router.get("/", (req, res) => {
 
     const errors = req.flash("errors");
     const mensajes = req.flash("mensajes");
 
-
-
-    res.render("socket.ejs", { errors, mensajes });
+    res.render("socket.ejs", {
+        errors,
+        mensajes
+    });
 });
+
 
 //pagina de admin
 router.get("/admin", [checkLogin, checkAdmin], (req, res) => {
@@ -54,17 +58,6 @@ router.get("/admin", [checkLogin, checkAdmin], (req, res) => {
 router.get('/socket', async(req, res) => {
     res.render('socket.ejs');
 });
-
-router.get('/saludo', async(req, res) => {
-    res.send('Hi everyone');
-});
-
-router.get('/adios', async(req, res) => {
-    res.send('Arrivederci');
-});
-
-
-
 
 
 module.exports = router;
