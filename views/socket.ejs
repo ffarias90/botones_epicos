@@ -60,6 +60,15 @@
         <div id="botones">
             <button id="reset" class="red">Reset count</button>
         </div>
+
+        <div class="row">
+            <div class="col-4">
+                <button id="green">Green</button>
+                <button id="blue">Blue</button>
+                <button id="pink">Pink</button>
+            </div>
+
+        </div>
     </div>
 
 
@@ -87,6 +96,8 @@
         });
 
 
+
+
         //resetear contador
         $('#reset').on('click', function() {
             //enviar info del html al servidor
@@ -96,6 +107,33 @@
         //mensaje devuelto desde el servidor hacia la vista
         socket.on('numero', function(data) {
             $('#numero2').html(data.count);
+            //$('body').css('background-color', 'violet')
+        });
+
+
+        //colores en tiempo real
+        $('#green').on('click', function() {
+            socket.emit('btn_green');
+        });
+
+        $('#blue').on('click', function() {
+            socket.emit('btn_blue');
+        });
+
+        $('#pink').on('click', function() {
+            socket.emit('btn_pink');
+        });
+
+        socket.on('botonVerde', function(data) {
+            $('body').css('background-color', 'green');
+        });
+
+        socket.on('botonAzul', function(data) {
+            $('body').css('background-color', 'blue');
+        });
+
+        socket.on('botonRosa', function(data) {
+            $('body').css('background-color', 'pink');
         });
     </script>
 </body>

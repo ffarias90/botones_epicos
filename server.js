@@ -78,4 +78,22 @@ io.on('connection', function(socket) {
         io.emit('numero', { count: contadorBtn });
     });
 
+    //colores en tiempo real
+    socket.on('btn_green', function(data) {
+        //enviar desde el servidor a la vista a TODOS
+        io.emit('botonVerde');
+
+    });
+
+    socket.on('btn_blue', function(data) {
+        //enviar desde el servidor a la vista a TODOS
+        io.emit('botonAzul');
+
+    });
+    socket.on('btn_pink', function(data) {
+        //enviar desde el servidor a la vista a TODOS
+        io.emit('botonRosa');
+
+    });
+
 });
